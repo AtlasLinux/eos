@@ -6,14 +6,15 @@ LDFLAGS := -shared -Bsymbolic -Lgnu-efi/x86_64/lib -Lgnu-efi/x86_64/gnuefi -Tgnu
 .PHONY: all gnu-efi clean
 
 all: gnu-efi
-	mkdir -p build
-	$(CC) $(CFLAGS) -c src/main.c -o build/main.o
-	$(LD) $(LDFLAGS) build/main.o -o build/main.so -lgnuefi -lefi
-	objcopy -j .text -j .sdata -j .data -j .rodata -j .dynamic -j .dynsym  -j .rel -j .rela -j .rel.* -j .rela.* -j .reloc --target efi-app-x86_64 --subsystem=10 build/main.so build/eos.efi
+	@mkdir -p build
+	@$(CC) $(CFLAGS) -c src/main.c -o build/main.o
+	@$(LD) $(LDFLAGS) build/main.o -o build/main.so -lgnuefi -lefi
+	@objcopy -j .text -j .sdata -j .data -j .rodata -j .dynamic -j .dynsym  -j .rel -j .rela -j .rel.* -j .rela.* -j .reloc --target efi-app-x86_64 --subsystem=10 build/main.so build/eos.efi
 
 gnu-efi:
-	@$(MAKE) --no-print-directory --quiet -C gnu-efi
+	@echo "==> Building gnu-efi"
+	@$(MAKE) --no-print-directory --quiet -C gnu-efi > /dev/null 2>&1
 
 clean:
-	@$(MAKE) --no-print-directory --quiet -C gnu-efi clean
-	rm -rf build
+	@$(MAKE) --no-print-directory --quiet -C gnu-efi clean > /dev/null 2>&1
+	@rm -rf build
