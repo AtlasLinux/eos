@@ -13,8 +13,8 @@ all: gnu-efi
 
 gnu-efi:
 	@echo "==> Building gnu-efi"
-	@$(MAKE) --no-print-directory --quiet -C gnu-efi > /dev/null 2>&1
+	@$(MAKE) --no-print-directory -s -C gnu-efi > /dev/null 2>&1
 
 clean:
-	@$(MAKE) --no-print-directory --quiet -C gnu-efi clean > /dev/null 2>&1
+	@$(MAKE) --no-print-directory -s -C gnu-efi clean > /dev/null 2>&1
 	@rm -rf build
